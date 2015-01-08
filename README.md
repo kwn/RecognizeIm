@@ -6,7 +6,19 @@ Recognize.im is providing API for Image Recognition. Those module is sample PHP 
 Installation
 ============
 
-Just download RecognizeImAPI.php and insert you credentials into config.php
+Add this requirement to your composer.json
+
+```
+"kwn/recognizeim": "dev-master"
+```
+
+Run update command
+
+```
+php composer.phar update kwn/recognizeim
+```
+
+Insert you credentials into config.php
 
 Usage
 =====
