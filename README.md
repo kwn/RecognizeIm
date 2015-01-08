@@ -24,9 +24,9 @@ Usage
 =====
     // include class
     require("RecognizeImAPI.php");
-	// and just call API methods
-	$res = RecognizeImAPI::recognize(file_get_contents('test.jpg'));
-	$imageList = RecognizeImAPI::imageList(); 
+    // and just call API methods
+    $res = RecognizeImAPI::recognize(file_get_contents('test.jpg'));
+    $imageList = RecognizeImAPI::imageList();
 
 Authorization
 =============
