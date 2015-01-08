@@ -23,7 +23,7 @@ class RecognizeImAPI
     private $api;
 
     /**
-     * @var array
+     * @var Configuration
      */
     private $config;
 
@@ -33,23 +33,22 @@ class RecognizeImAPI
      */
     public function __construct(array $config)
     {
-        $this->config = array_merge(array(
-            'URL'       => 'http://clapi.itraff.pl/',
-            'CLIENT_ID' => 'myClientId',
-            'API_KEY'   => 'myApiKey',
-            'CLAPI_KEY' => 'myClapiKey',
-        ), $config);
+        $this->config = new Configuration(
+            $config['CLIENT_ID'],
+            $config['API_KEY'],
+            $config['CLAPI_KEY']
+        );
         
         $this->api = new \SoapClient(null, array(
-            'location'   => $this->config['URL'],
-            'uri'        => $this->config['URL'],
+            'location'   => Configuration::URL,
+            'uri'        => Configuration::URL,
             'trace'      => 1,
             'cache_wsdl' => WSDL_CACHE_NONE
         ));
         
         $result = $this->api->auth(
-            $this->config['CLIENT_ID'],
-            $this->config['CLAPI_KEY'],
+            $this->config->getClientId(),
+            $this->config->getClapiKey(),
             null
         );
 
@@ -135,14 +134,14 @@ class RecognizeImAPI
      */
     public function recognize($image, $mode = 'single', $getAll = false)
     {
-        $hash = md5($this->config['API_KEY'].$image);
-        $url  = $this->config['URL'].'v2/recognize/'.$mode.'/';
+        $hash = md5($this->config->getApiKey().$image);
+        $url  = Configuration::URL.'v2/recognize/'.$mode.'/';
 
         if ($getAll) {
             $url .= 'all/';
         }
 
-        $url .= $this->config['CLIENT_ID'];
+        $url .= $this->config->getClientId();
 
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_HEADER, 0);
