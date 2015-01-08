@@ -17,7 +17,7 @@
             "email":    "marcin.szajek+github@itraff.pl",
             "homepage": "http://www.Recognize.im",
             "role":     "developer"
-        },
+        }
     ],
     "require": {
         "php":     ">=5.3.3"
