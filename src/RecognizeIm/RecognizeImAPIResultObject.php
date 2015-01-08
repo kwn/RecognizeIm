@@ -4,9 +4,9 @@ namespace RecognizeIm;
 
 class RecognizeImAPIResultObject
 {
-    protected $id       = NULL;
-    protected $name     = '';
-    protected $location = array();
+    private $id       = null;
+    private $name     = '';
+    private $location = array();
 
     public function __construct($jsonData)
     {

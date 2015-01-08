@@ -7,9 +7,9 @@ class RecognizeImAPIResult
     const STATUS_OK       = 0;
     const STATUS_NO_MATCH = 1;
 
-    protected $status  = self::STATUS_OK;
-    protected $message = '';
-    protected $objects = array();
+    private $status  = self::STATUS_OK;
+    private $message = '';
+    private $objects = array();
 
     public function __construct($jsonData)
     {
@@ -57,6 +57,7 @@ class RecognizeImAPIResult
     public function drawFrames($file)
     {
         $im = imagecreatefromstring($file);
+
         if (!$im) {
             return false;
         }
