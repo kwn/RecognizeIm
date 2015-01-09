@@ -45,11 +45,11 @@ $recognizeim = new RecognizeImApi($soapApi, $restApi);
 // now you can use soap api functions or rest api recognize method
 
 // create an image and call recognize method 
-$image = new Image('/home/kwnuk/Obrazy/red.jpg');
+$image = new Image('/home/kwn/Pictures/red.jpg');
 $result = $recognizeim->getRestApiClient()->recognize($image, 'multi');
 ```
 
 Authorization
 -------------
 
-You don't need to call method auth by yourself. Module object will authorize you when needed, you just need do provide valid credentials. You can get them from your [account tab](http://recognize.im/user/profile)
+You don't need to call method auth by yourself. Module object will authorize you when needed, you just need do provide valid credentials. You can get them from your [account tab](http://recognize.im/user/profile).
