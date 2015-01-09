@@ -2,7 +2,7 @@
 
 namespace RecognizeIm\Result;
 
-class RequestResult
+class SoapRequestResult
 {
     const STATUS_OK    = 0;
     const STATUS_ERROR = 1;

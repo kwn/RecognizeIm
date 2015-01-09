@@ -4,7 +4,7 @@ namespace RecognizeIm\Client;
 
 use RecognizeIm\Configuration;
 use RecognizeIm\Exception\SoapApiException;
-use RecognizeIm\Result\RequestResult;
+use RecognizeIm\Result\SoapRequestResult;
 
 class SoapApi
 {
@@ -27,12 +27,12 @@ class SoapApi
     }
 
     /**
-     * @param RequestResult $result
+     * @param SoapRequestResult $result
      * @throws SoapApiException
      */
-    private function checkRequestResultSuccess(RequestResult $result)
+    private function checkRequestResultSuccess(SoapRequestResult $result)
     {
-        if ($result->getStatus() !== RequestResult::STATUS_OK) {
+        if ($result->getStatus() !== SoapRequestResult::STATUS_OK) {
             throw new SoapApiException(
                 $result->getMessage(),
                 $result->getStatus()
@@ -48,7 +48,7 @@ class SoapApi
      */
     public function auth($clientId, $keyClapi, $ip = null)
     {
-        $result = new RequestResult(
+        $result = new SoapRequestResult(
             $this->soapClient->auth($clientId, $keyClapi, $ip)
         );
 
@@ -63,7 +63,9 @@ class SoapApi
      */
     public function callback($callbackUrl = null)
     {
-        $result = new RequestResult($this->soapClient->callback($callbackUrl));
+        $result = new SoapRequestResult(
+            $this->soapClient->callback($callbackUrl)
+        );
 
         $this->checkRequestResultSuccess($result);
     }
@@ -76,7 +78,7 @@ class SoapApi
      */
     public function imageCount()
     {
-        $result = new RequestResult($this->soapClient->imageCount());
+        $result = new SoapRequestResult($this->soapClient->imageCount());
 
         $this->checkRequestResultSuccess($result);
 
@@ -91,7 +93,7 @@ class SoapApi
      */
     public function imageDelete($id)
     {
-        $result = new RequestResult($this->soapClient->imageDelete($id));
+        $result = new SoapRequestResult($this->soapClient->imageDelete($id));
 
         $this->checkRequestResultSuccess($result);
     }
@@ -105,7 +107,7 @@ class SoapApi
      */
     public function imageGet($id)
     {
-        $result = new RequestResult($this->soapClient->imageGet($id));
+        $result = new SoapRequestResult($this->soapClient->imageGet($id));
 
         $this->checkRequestResultSuccess($result);
 
@@ -122,7 +124,7 @@ class SoapApi
      */
     public function imageInsert($id, $name, $data)
     {
-        $result = new RequestResult(
+        $result = new SoapRequestResult(
             $this->soapClient->imageInsert($id, $name, $data)
         );
 
@@ -143,7 +145,7 @@ class SoapApi
      */
     public function imageList(array $params = array())
     {
-        $result = new RequestResult(
+        $result = new SoapRequestResult(
             $this->soapClient->imageList($params)
         );
 
@@ -160,7 +162,9 @@ class SoapApi
      */
     public function imageMeta()
     {
-        $result = $result = new RequestResult($this->soapClient->imageMeta());
+        $result = $result = new SoapRequestResult(
+            $this->soapClient->imageMeta()
+        );
 
         $this->checkRequestResultSuccess($result);
 
@@ -178,7 +182,7 @@ class SoapApi
      */
     public function imageUpdate($id, array $data = array())
     {
-        $result = new RequestResult(
+        $result = new SoapRequestResult(
             $this->soapClient->imageUpdate($id, $data)
         );
 
@@ -192,7 +196,7 @@ class SoapApi
      */
     public function indexBuild()
     {
-        $result = new RequestResult($this->soapClient->indexBuild());
+        $result = new SoapRequestResult($this->soapClient->indexBuild());
 
         $this->checkRequestResultSuccess($result);
     }
@@ -205,7 +209,7 @@ class SoapApi
      */
     public function indexStatus()
     {
-        $result = new RequestResult($this->soapClient->indexStatus());
+        $result = new SoapRequestResult($this->soapClient->indexStatus());
 
         $this->checkRequestResultSuccess($result);
 
@@ -222,7 +226,9 @@ class SoapApi
      */
     public function keyGet($regenerate = false)
     {
-        $result = new RequestResult($this->soapClient->keyGet($regenerate));
+        $result = new SoapRequestResult(
+            $this->soapClient->keyGet($regenerate)
+        );
 
         $this->checkRequestResultSuccess($result);
 
@@ -238,7 +244,7 @@ class SoapApi
      */
     public function modeAvailable()
     {
-        $result = new RequestResult($this->soapClient->modeAvailable());
+        $result = new SoapRequestResult($this->soapClient->modeAvailable());
 
         $this->checkRequestResultSuccess($result);
 
@@ -254,7 +260,7 @@ class SoapApi
      */
     public function modeChange($mode)
     {
-        $result = new RequestResult($this->soapClient->modeChange($mode));
+        $result = new SoapRequestResult($this->soapClient->modeChange($mode));
 
         $this->checkRequestResultSuccess($result);
     }
@@ -267,7 +273,7 @@ class SoapApi
      */
     public function modeGet()
     {
-        $result = new RequestResult($this->soapClient->modeGet());
+        $result = new SoapRequestResult($this->soapClient->modeGet());
 
         $this->checkRequestResultSuccess($result);
 
@@ -282,7 +288,7 @@ class SoapApi
      */
     public function paymentList()
     {
-        $result = new RequestResult($this->soapClient->paymentList());
+        $result = new SoapRequestResult($this->soapClient->paymentList());
 
         $this->checkRequestResultSuccess($result);
 
@@ -296,7 +302,7 @@ class SoapApi
      */
     public function userDelete()
     {
-        $result = new RequestResult($this->soapClient->userDelete());
+        $result = new SoapRequestResult($this->soapClient->userDelete());
 
         $this->checkRequestResultSuccess($result);
     }
@@ -309,7 +315,7 @@ class SoapApi
      */
     public function userGet()
     {
-        $result = new RequestResult($this->soapClient->userGet());
+        $result = new SoapRequestResult($this->soapClient->userGet());
 
         $this->checkRequestResultSuccess($result);
 
@@ -324,7 +330,7 @@ class SoapApi
      */
     public function userLimits()
     {
-        $result = new RequestResult($this->soapClient->userLimits());
+        $result = new SoapRequestResult($this->soapClient->userLimits());
 
         $this->checkRequestResultSuccess($result);
 
@@ -342,7 +348,7 @@ class SoapApi
         array $infoBilling = array(),
         array $infoInvoice = array()
     ) {
-        $result = new RequestResult(
+        $result = new SoapRequestResult(
             $this->soapClient->userUpdate($infoBilling, $infoInvoice)
         );
 

@@ -2,6 +2,7 @@
 
 namespace RecognizeIm;
 
+use RecognizeIm\Client\RestApi;
 use RecognizeIm\Client\SoapApi;
 
 // These are the limits for query images:
@@ -25,6 +26,11 @@ class RecognizeImAPI
     private $soapApiClient;
 
     /**
+     * @var RestApi
+     */
+    private $restApiClient;
+
+    /**
      * @var Configuration
      */
     private $config;
@@ -42,20 +48,17 @@ class RecognizeImAPI
         );
 
         $this->soapApiClient = new SoapApi();
-        
-        $result = $this->soapApiClient->auth(
+
+        $this->soapApiClient->auth(
             $this->config->getClientId(),
             $this->config->getClapiKey(),
             null
         );
 
-        if (is_object($result)) {
-            $result = (array) $result;
-        }
-
-        if ($result['status']) {
-            throw new \Exception("Cannot authenticate");
-        } 
+        $this->restApiClient = new RestApi(
+            $this->config->getClientId(),
+            $this->config->getApiKey()
+        );
     }
 
     /**
@@ -66,6 +69,16 @@ class RecognizeImAPI
     public function getSoapApiClient()
     {
         return $this->soapApiClient;
+    }
+
+    /**
+     * Get RestApiClient
+     *
+     * @return RestApi
+     */
+    public function getRestApiClient()
+    {
+        return $this->restApiClient;
     }
 
     /**
@@ -111,43 +124,4 @@ class RecognizeImAPI
         return true;
     }
 
-    /**
-     * Recognize object using image in single mode
-     * @param $image query
-     * @param $mode Recognition mode. Should be 'single' or 'multi'. Default is 'single'.
-     * @param $getAll if TRUE returns all recognized objects in 'single' mode, otherwize only the best one; in 'multi' it enables searching for multiple instances of each object
-     * @returns associative array containg recognition result
-     */
-    public function recognize($image, $mode = 'single', $getAll = false)
-    {
-        $hash = md5($this->config->getApiKey().$image);
-        $url  = Configuration::URL.'v2/recognize/'.$mode.'/';
-
-        if ($getAll) {
-            $url .= 'all/';
-        }
-
-        $url .= $this->config->getClientId();
-
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('x-itraff-hash: '.$hash, 'Content-type: image/jpeg'));
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $image);
-
-        $obj    = curl_exec($ch);
-        $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-        $res = array();
-
-        if ($status != '200') {
-            //throw new \Exception('Cannot upload photo');
-            $res = array('status' => -1, 'message' => 'Cannot upload photo');
-        } else {
-            $res = (array) json_decode($obj);
-        }
-
-        return new RecognizeImAPIResult($res);
-    }
 };
