@@ -2,6 +2,8 @@
 
 namespace RecognizeIm;
 
+use RecognizeIm\Model\RecognizedImage;
+
 class RecognizeImAPIResult
 {
     const STATUS_OK       = 0;
@@ -21,7 +23,7 @@ class RecognizeImAPIResult
         }
 
         foreach ($jsonData['objects'] as $obj) {
-            $this->objects[] = new RecognizeImAPIResultObject((array) $obj);
+            $this->objects[] = new RecognizedImage($obj);
         }
 
         if (empty($this->objects)) {

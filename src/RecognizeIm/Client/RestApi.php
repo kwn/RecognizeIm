@@ -4,6 +4,7 @@ namespace RecognizeIm\Client;
 
 use RecognizeIm\Configuration;
 use RecognizeIm\RecognizeImAPIResult;
+use RecognizeIm\Result\RecognizeResult;
 
 class RestApi
 {
@@ -55,7 +56,7 @@ class RestApi
      * @param $image query
      * @param $mode Recognition mode. Should be 'single' or 'multi'. Default is 'single'.
      * @param $getAll if TRUE returns all recognized objects in 'single' mode, otherwize only the best one; in 'multi' it enables searching for multiple instances of each object
-     * @return associative array containg recognition result
+     * @return RecognizeResult
      */
     public function recognize($image, $mode = 'single', $getAll = false)
     {
@@ -76,12 +77,14 @@ class RestApi
         $res = array();
 
         if ($status !== 200) {
-            //throw new \Exception('Cannot upload photo');
-            $res = array('status' => -1, 'message' => 'Cannot upload photo');
+            $res = array(
+                'status'  => -1,
+                'message' => 'Cannot upload photo'
+            );
         } else {
-            $res = (array) json_decode($obj);
+            $res = json_decode($obj);
         }
 
-        return new RecognizeImAPIResult($res);
+        return new RecognizeResult($res);
     }
 }
