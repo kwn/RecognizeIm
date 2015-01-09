@@ -2,7 +2,7 @@
     "name":        "kwn/recognizeim",
     "type":        "library",
     "description": "Recognize.im PHP client. Allows image recognizing, includes REST and SOAP API",
-    "homepage":    "https://github.com/kwn/RegocnizeIm",
+    "homepage":    "https://github.com/kwn/RecognizeIm",
     "license":     "MIT",
     "keywords":    ["recognizeim", "recognize.im", "image", "reconizing", "recognize"],
     "authors": [
