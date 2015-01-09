@@ -1,7 +1,7 @@
 {
     "name":        "kwn/recognizeim",
     "type":        "library",
-    "description": "RecognizeIm PHP client based on original library, but with composer and namespaces support.",
+    "description": "Recognize.im PHP client. Allows image recognizing, includes REST and SOAP API",
     "homepage":    "https://github.com/kwn/recognizeim",
     "license":     "MIT",
     "keywords":    ["recognizeim", "recognize.im", "image", "reconizing", "recognize"],
@@ -10,12 +10,6 @@
             "name":     "Karol Wnuk",
             "email":    "k.wnuk@ascetic.pl",
             "homepage": "https://github.com/kwn",
-            "role":     "developer"
-        },
-        {
-            "name":     "Marcin Szajek",
-            "email":    "marcin.szajek+github@itraff.pl",
-            "homepage": "http://www.Recognize.im",
             "role":     "developer"
         }
     ],

@@ -2,6 +2,8 @@
 
 namespace RecognizeIm\Service;
 
+use RecognizeIm\Exception\RecognizeImException;
+use RecognizeIm\Model\Image;
 use RecognizeIm\Model\RecognizedImage;
 use RecognizeIm\Result\RecognizeResult;
 
@@ -11,14 +13,15 @@ class FrameGenerator
      * @param string $file
      * @return bool|string
      */
-    public function drawFrames($file, RecognizeResult $recognizeResult)
+    public function drawFrames(Image $file, RecognizeResult $recognizeResult)
     {
-        // TODO refactor
+        $im = imagecreatefromstring($file->getFileContents());
 
-        $im = imagecreatefromstring($file);
-
-        if (!$im) {
-            return false;
+        if (false === $im) {
+            throw new RecognizeImException(
+                'Image type is unsupported, the data is not in a recognised '.
+                'format, or the image is corrupt and cannot be loaded.'
+            );
         }
 
         $color = imagecolorallocate($im, 255, 255, 255);
