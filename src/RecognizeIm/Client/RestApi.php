@@ -5,6 +5,7 @@ namespace RecognizeIm\Client;
 use RecognizeIm\Configuration;
 use RecognizeIm\RecognizeImAPIResult;
 use RecognizeIm\Result\RecognizeResult;
+use RecognizeIm\Service\ImageVerificator;
 
 class RestApi
 {
@@ -19,15 +20,25 @@ class RestApi
     private $apiKey;
 
     /**
+     * @var ImageVerificator
+     */
+    private $imageVerificator;
+
+    /**
      * Constructor
      *
      * @param string $clientId
      * @param string $apiKey
+     * @param ImageVerificator $imageVerificator
      */
-    public function __construct($clientId, $apiKey)
-    {
-        $this->clientId = $clientId;
-        $this->apiKey   = $apiKey;
+    public function __construct(
+        $clientId,
+        $apiKey,
+        ImageVerificator $imageVerificator
+    ) {
+        $this->clientId         = $clientId;
+        $this->apiKey           = $apiKey;
+        $this->imageVerificator = $imageVerificator;
     }
 
     /**

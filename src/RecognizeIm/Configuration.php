@@ -2,10 +2,19 @@
 
 namespace RecognizeIm;
 
-
 class Configuration
 {
     const URL = 'http://clapi.itraff.pl/';
+
+    const SINGLEIR_MAX_FILE_SIZE     = 500;  // KBytes
+    const SINGLEIR_MIN_DIMENSION     = 100;  // pix
+    const SINGLEIR_MIN_IMAGE_SURFACE = 0.05; // Mpix
+    const SINGLEIR_MAX_IMAGE_SURFACE = 0.31; // Mpix
+
+    const MULTIIR_MAX_FILE_SIZE     = 3500; // KBytes
+    const MULTIIR_MIN_DIMENSION     = 100;  // pix
+    const MULTIIR_MIN_IMAGE_SURFACE = 0.1;  // Mpix
+    const MULTIIR_MAX_IMAGE_SURFACE = 5.1;  // Mpix
 
     /**
      * @var string

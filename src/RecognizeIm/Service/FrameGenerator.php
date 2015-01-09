@@ -5,7 +5,7 @@ namespace RecognizeIm\Service;
 use RecognizeIm\Model\RecognizedImage;
 use RecognizeIm\Result\RecognizeResult;
 
-class FrameDrawer
+class FrameGenerator
 {
     /**
      * @param string $file
@@ -13,6 +13,8 @@ class FrameDrawer
      */
     public function drawFrames($file, RecognizeResult $recognizeResult)
     {
+        // TODO refactor
+
         $im = imagecreatefromstring($file);
 
         if (!$im) {
@@ -37,6 +39,7 @@ class FrameDrawer
         imagejpeg($im);
         $img = ob_get_clean();
         imagedestroy($im);
+
         return $img;
     }
 }

@@ -15,8 +15,11 @@ class SoapApi
 
     /**
      * Constructor
+     *
+     * @param $clientId
+     * @param $clapiKey
      */
-    public function __construct()
+    public function __construct($clientId, $clapiKey)
     {
         $this->soapClient = new \SoapClient(null, array(
             'location'   => Configuration::URL,
@@ -24,6 +27,8 @@ class SoapApi
             'trace'      => 1,
             'cache_wsdl' => WSDL_CACHE_NONE
         ));
+
+        $this->soapApiClient->auth($clientId, $clapiKey, null);
     }
 
     /**

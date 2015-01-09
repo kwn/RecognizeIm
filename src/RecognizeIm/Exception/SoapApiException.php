@@ -2,6 +2,6 @@
 
 namespace RecognizeIm\Exception;
 
-class SoapApiException extends \Exception
+class SoapApiException extends RecognizeImException
 {
 }
