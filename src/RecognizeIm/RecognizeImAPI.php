@@ -2,6 +2,8 @@
 
 namespace RecognizeIm;
 
+use RecognizeIm\Client\SoapApi;
+
 // These are the limits for query images:
 // for SingleIR
 define("SINGLEIR_MAX_FILE_SIZE", 500);      //KBytes
@@ -18,9 +20,9 @@ define("MULTIIR_MAX_IMAGE_SURFACE", 5.1);   //Mpix
 class RecognizeImAPI
 {
     /**
-     * @var \SoapClient
+     * @var SoapApi
      */
-    private $api;
+    private $soapApiClient;
 
     /**
      * @var Configuration
@@ -38,15 +40,10 @@ class RecognizeImAPI
             $config['API_KEY'],
             $config['CLAPI_KEY']
         );
+
+        $this->soapApiClient = new SoapApi();
         
-        $this->api = new \SoapClient(null, array(
-            'location'   => Configuration::URL,
-            'uri'        => Configuration::URL,
-            'trace'      => 1,
-            'cache_wsdl' => WSDL_CACHE_NONE
-        ));
-        
-        $result = $this->api->auth(
+        $result = $this->soapApiClient->auth(
             $this->config->getClientId(),
             $this->config->getClapiKey(),
             null
@@ -62,24 +59,13 @@ class RecognizeImAPI
     }
 
     /**
-     * wrap api call
+     * Get SoapApiClient
      *
-     * @param $name fn name
-     * @param $arguments fn args
+     * @return SoapApi
      */
-    public function __call($name, $arguments)
+    public function getSoapApiClient()
     {
-        $r = $this->api->$name($arguments);
-
-        if (is_object($r)) {
-            $r = (array) $r;
-        }
-
-        if (!$r['status']) {
-            return array_key_exists('data', $r) ? $r['data'] : null;
-        }
-
-        throw new \Exception($r['message'], $r['status']);
+        return $this->soapApiClient;
     }
 
     /**
