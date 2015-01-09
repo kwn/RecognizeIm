@@ -3,6 +3,8 @@
 namespace RecognizeIm\Client;
 
 use RecognizeIm\Configuration;
+use RecognizeIm\Exception\RestApiException;
+use RecognizeIm\Model\Image;
 use RecognizeIm\RecognizeImAPIResult;
 use RecognizeIm\Result\RecognizeResult;
 use RecognizeIm\Service\ImageVerificator;
@@ -32,12 +34,11 @@ class RestApi
      * @param ImageVerificator $imageVerificator
      */
     public function __construct(
-        $clientId,
-        $apiKey,
+        Configuration $configuration,
         ImageVerificator $imageVerificator
     ) {
-        $this->clientId         = $clientId;
-        $this->apiKey           = $apiKey;
+        $this->clientId         = $configuration->getClientId();
+        $this->apiKey           = $configuration->getApiKey();
         $this->imageVerificator = $imageVerificator;
     }
 
@@ -64,21 +65,30 @@ class RestApi
     /**
      * Recognize object using image in single mode
      *
-     * @param $image query
-     * @param $mode Recognition mode. Should be 'single' or 'multi'. Default is 'single'.
-     * @param $getAll if TRUE returns all recognized objects in 'single' mode, otherwize only the best one; in 'multi' it enables searching for multiple instances of each object
+     * @param Image $image
+     * @param string $mode Recognition mode. Should be 'single' or 'multi'.
+     *     Default is 'single'.
+     * @param bool $getAll if true returns all recognized objects in 'single'
+     *     mode, otherwize only the best one; in 'multi' it enables searching
+     *     for multiple instances of each object
      * @return RecognizeResult
+     * @throws RestApiException
      */
-    public function recognize($image, $mode = 'single', $getAll = false)
+    public function recognize(Image $image, $mode = 'single', $getAll = false)
     {
+        if (!$this->imageVerificator->imageLimitsCorrect($image, $mode)) {
+            throw new RestApiException('Image limits are not correct');
+        }
+
         $curl = curl_init($this->buildUrl($mode, $getAll));
+        $hash = md5($this->apiKey.$image->getFileContents());
 
         curl_setopt($curl, CURLOPT_HEADER, 0);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $image);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $image->getFileContents());
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-            'x-itraff-hash: '.md5($this->apiKey.$image),
+            'x-itraff-hash: '.$hash,
             'Content-type: image/jpeg'
         ));
 

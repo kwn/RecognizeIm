@@ -4,8 +4,9 @@ namespace RecognizeIm;
 
 use RecognizeIm\Client\RestApi;
 use RecognizeIm\Client\SoapApi;
+use RecognizeIm\Service\ImageVerificator;
 
-class RecognizeImAPI
+class RecognizeImApi
 {
     /**
      * @var SoapApi
@@ -26,23 +27,10 @@ class RecognizeImAPI
      * @param array $config
      * @throws \Exception
      */
-    public function __construct(array $config)
+    public function __construct(SoapApi $soapApi, RestApi $restApi)
     {
-        $this->config = new Configuration(
-            $config['CLIENT_ID'],
-            $config['API_KEY'],
-            $config['CLAPI_KEY']
-        );
-
-        $this->soapApiClient = new SoapApi(
-            $this->config->getClientId(),
-            $this->config->getClapiKey()
-        );
-
-        $this->restApiClient = new RestApi(
-            $this->config->getClientId(),
-            $this->config->getApiKey()
-        );
+        $this->soapApiClient = $soapApi;
+        $this->restApiClient = $restApi;
     }
 
     /**

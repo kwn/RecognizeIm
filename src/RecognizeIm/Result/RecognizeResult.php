@@ -8,6 +8,7 @@ class RecognizeResult
 {
     const STATUS_SEND_ERROR = -1;
     const STATUS_MATCHED    = 0;
+    const STATUS_INVALID    = 1;
     const STATUD_NO_MATCH   = 2;
 
     /**

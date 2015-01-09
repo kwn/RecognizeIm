@@ -38,6 +38,24 @@ class Image
      */
     public function __toString()
     {
+        return $this->getFileContents();
+    }
+
+    /**
+     * Get path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFileContents()
+    {
         return file_get_contents($this->path);
     }
 }

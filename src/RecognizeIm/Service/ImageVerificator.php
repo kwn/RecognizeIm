@@ -4,24 +4,25 @@ namespace RecognizeIm\Service;
 
 use RecognizeIm\Configuration;
 use RecognizeIm\Exception\RecognizeImException;
+use RecognizeIm\Model\Image;
 
 class ImageVerificator
 {
     /**
      * Checks image limits, depending on the recognition mode
      *
-     * @param string $imagePath the path to the file
+     * @param Image $image the path to the file
      * @param string $mode the recognition mode
      * @return bool
      */
-    public function checkImageLimits($imagePath, $mode = 'single')
+    public function imageLimitsCorrect(Image $image, $mode = 'single')
     {
         if (!in_array($mode, array('single', 'multi'))) {
             throw new RecognizeImException('Wrong "mode" value. Should be "single" or "multi"');
         }
 
-        $size       = filesize($imagePath) / 1000.0; // KB
-        $dimensions = getimagesize($imagePath);
+        $size       = filesize($image->getPath()) / 1000.0; // KB
+        $dimensions = getimagesize($image->getPath());
         $width      = $dimensions[0];
         $height     = $dimensions[1];
         $surface    = ($width * $height) / 1000000.0; // Mpix
