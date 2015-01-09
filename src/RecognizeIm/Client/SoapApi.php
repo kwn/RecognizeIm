@@ -27,25 +27,6 @@ class SoapApi
     }
 
     /**
-     * @param $name fn name
-     * @param $arguments fn args
-     */
-    public function __call($name, $arguments)
-    {
-        $r = $this->soapClient->$name($arguments);
-
-        if (is_object($r)) {
-            $r = (array) $r;
-        }
-
-        if (!$r['status']) {
-            return array_key_exists('data', $r) ? $r['data'] : null;
-        }
-
-        throw new \Exception($r['message'], $r['status']);
-    }
-
-    /**
      * @param RequestResult $result
      * @throws SoapApiException
      */
