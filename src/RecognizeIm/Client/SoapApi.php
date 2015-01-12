@@ -137,7 +137,7 @@ class SoapApi
         $result = new SoapRequestResult($this->soapClient->imageInsert(
             $id,
             $name,
-            $data->getFileContents()
+            base64_encode($data->getFileContents())
         ));
 
         $this->checkRequestResultSuccess($result);
