@@ -4,6 +4,7 @@ namespace RecognizeIm\Client;
 
 use RecognizeIm\Configuration;
 use RecognizeIm\Exception\SoapApiException;
+use RecognizeIm\Model\Image;
 use RecognizeIm\Result\SoapRequestResult;
 
 class SoapApi
@@ -128,14 +129,16 @@ class SoapApi
      *
      * @param string $id
      * @param string $name
-     * @param string $data
+     * @param Image $data
      * @throws SoapApiException
      */
-    public function imageInsert($id, $name, $data)
+    public function imageInsert($id, $name, Image $data)
     {
-        $result = new SoapRequestResult(
-            $this->soapClient->imageInsert($id, $name, $data)
-        );
+        $result = new SoapRequestResult($this->soapClient->imageInsert(
+            $id,
+            $name,
+            $data->getFileContents()
+        ));
 
         $this->checkRequestResultSuccess($result);
     }
