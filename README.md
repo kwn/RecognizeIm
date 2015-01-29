@@ -9,7 +9,7 @@ Installation
 Add package to your composer.json
 
 ```
-"kwn/recognizeim": "dev-master"
+"kwn/recognizeim": "~1.0"
 ```
 
 Run update command
