@@ -1,5 +1,6 @@
 Recognize.im API
 ===============
+[![Code Climate](https://codeclimate.com/github/kwn/RecognizeIm/badges/gpa.svg)](https://codeclimate.com/github/kwn/RecognizeIm)
 
 Recognize.im provides API for Image Recognition. Before use you need to visit [http://www.recognize.im/](http://recognize.im/) and create an account. After sign in go to the user profile section and obtain: ```Your Client ID```, ```Your API Key``` and ```Your CLAPI Key```. 
 
